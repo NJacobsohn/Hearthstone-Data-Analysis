@@ -42,7 +42,7 @@ if __name__ == '__main__':
     tournament_df = unique_column_split(clean_df, 'deck_type', type_ls[6]) #SIZE= 3597
 
 
-    df_list = [tavern_brawl_df, ranked_deck_df, theorycraft_df, none_df,  arena_df, pve_adventure_df, tournament_df]
+    df_list = [ranked_deck_df, theorycraft_df, none_df, tournament_df]
 
     
 

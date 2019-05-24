@@ -112,11 +112,16 @@ if __name__ == '__main__':
         'id' #this seems like an internal blizzard id, not the id we'll be using to create deck lists
         ]
 
-    #ORDER IS IMPORTANT HERE, MUST DO THIS ORDER
+    '''
+    ORDER IS IMPORTANT HERE, MUST DO 
+        1)FILL
+        2)ROW DROP
+        3)COL DROP
+    '''
     json_df = drop_cols(drop_rows(fill_with_na(json_df, card_fill_dict), card_row_drop_dict), card_cols_to_drop)
-    print(json_df.shape)
+    #print(json_df.shape)
     json_df['health'] = weapon_durability_fixing(json_df)
-    print(json_df.shape)
+    #print(json_df.shape)
 
 
 
@@ -151,8 +156,20 @@ if __name__ == '__main__':
 
     # SET IDs
     '''
-    ['TGT', 'GANGS', 'CORE', 'UNGORO', 'EXPERT1', 'HOF', 
-    'OG', 'BRM', 'GVG', 'KARA', 'LOE', 'NAXX']
+    {
+        TGT : The Grand Tournament, 
+        GANGS : Mean Streets of Gadgetzan, 
+        CORE : Classic, 
+        UNGORO : Journey to Un'Goro, 
+        EXPERT1 : I feel like this is also Classic, 
+        HOF : Hall of Fame, 
+        OG : Basic Cards?, 
+        BRM : Blackrock Mountain, 
+        GVG : Goblins versus Gnomes, 
+        KARA : One Night in Karazhan, 
+        LOE : League of Explorers, 
+        NAXX : Naxxramus
+    }
     '''
 
 

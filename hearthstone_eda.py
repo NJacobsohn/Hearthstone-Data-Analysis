@@ -69,7 +69,7 @@ if __name__ == '__main__':
 
     ranked_decks, theorycraft, none_type, tournament = deck_dataframe_creation(unclean_df)
 
-    df_list = [ranked_decks, theorycraft, none_type, tournament] #creates list of dfs to easily iterate cleaning methods through them
+    df_list = [ranked_decks, theorycraft, none_type, tournament] #creates list of dfs to easily iterate future cleaning methods through them
 
 
     #defines dictionary for proper card.json NaN filling
@@ -115,21 +115,13 @@ if __name__ == '__main__':
         ]
 
     #ORDER IS IMPORTANT HERE, MUST DO THIS ORDER
-    json_df = fill_with_na(json_df, card_fill_dict)
+    json_df = drop_cols(drop_rows(fill_with_na(json_df, card_fill_dict), card_row_drop_dict), card_cols_to_drop)
     print(json_df.shape)
-
-    json_df = drop_rows(json_df, card_row_drop_dict)
-    print(json_df.shape)
-
-    json_df = drop_cols(json_df, card_cols_to_drop)
-    print(json_df.shape)
-
     json_df['health'] = weapon_durability_fixing(json_df)
     print(json_df.shape)
 
 
 
-    #this SHOULD leave the card json with 1189 rows
     #deck_type column has 7 types, going to put each type in its own df to properly separate them and make things easier to work through
 
     #type_ls = list(unclean_df['deck_type'].unique()) #makes list of unique values
@@ -154,22 +146,6 @@ if __name__ == '__main__':
 
     #tournament decks are maybe important? (tournament meta versus popular meta?)
     #tournament_df = unique_column_split(unclean_df, 'deck_type', 'Tournament') #SIZE= 3597
-     
-    '''
-    THIS HAS BEEN IMPLEMENTED INTO A FUNCTION
-
-    #row dropping test
-    #this drops the rows but maintains the original index values of the rows!
-    collectible0_index = json_df[json_df['collectible'] == 0].index 
-    json_df.drop(collectible0_index, inplace=True) #this *SHOULD* remove all non-playable cards in the game
-    #1206 rows now
-    heroSkin_index = json_df[json_df['set'] == 'HERO_SKINS'].index
-    json_df.drop(heroSkin_index, inplace=True) #removes alt heros from the list
-    #1198 rows now
-    hero_index = set(json_df[json_df['type'] == 'SPELL'].index)
-    json_df.drop(hero_index, inplace=True) #removes standard hero portraits from df
-    #1189 rows now
-    '''
     
 
     '''
@@ -178,16 +154,13 @@ if __name__ == '__main__':
         collect_sum = json_df[json_df['set'] == id]['collectible'].sum()
         collect_count = json_df[json_df['set'] == id]['collectible'].count()
         print("# of collectible cards in {} out of total = {} / {}".format(id, collect_sum, collect_count))
-        ''' #code used to check proportion of collectible cards in each set
+    ''' 
+    #code used to check proportion of collectible cards in each set
 
     # SET IDs
     #['TGT', 'GANGS', 'CORE', 'UNGORO', 'EXPERT1', 'HOF', 'OG', 'BRM',
     #   'GVG', 'KARA', 'LOE', 'NAXX']
-    '''
-    These columns need to be certain values for a card to actually exist
-        collectible = 1
 
-    '''
 
 
     #DECK DF MASTER COL LIST

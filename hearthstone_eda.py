@@ -1,4 +1,4 @@
-import numpy as numpy
+import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import json
@@ -13,7 +13,8 @@ def deck_list_create(unclean_df):
     '''takes the deck dataframe and combines all the single card columns into a single columns with a list of dbfIds'''
     card_col_ls = ['card_{}'.format(i) for i in range(30)] #creates list of column names for cards
     big_card_df = pd.DataFrame(unclean_df[card_col_ls], columns=card_col_ls) #creates a new dataframe with JUST the card columns
-    unclean_df['card_list'] = big_card_df.values.tolist() #makes new column where each value in big_card_df is compressed into a list for reach row
+    big_card_list = big_card_df.values.tolist() #makes list of lists of deck lists
+    unclean_df['card_list'] = tuple(map(tuple, big_card_list)) #makes new column where each value in big_card_list is mapped from a list to a tuple
     unclean_df.drop(card_col_ls, axis=1, inplace=True) #drops single card lists in favor of the new listed one
     return unclean_df
 
@@ -47,7 +48,7 @@ def drop_rows(data_frame, removal_dict):
     
 
 def drop_cols(data_frame, cols_to_drop):
-    '''drops columns from given dataframe. cols are inputted as a list in cols_to_drop'''
+    '''Drops columns from given dataframe. cols are inputted as a list in cols_to_drop'''
     data_frame.drop(cols_to_drop, axis=1, inplace=True)
     return data_frame
 
@@ -59,6 +60,8 @@ def weapon_durability_fixing(json_data):
         json_data['health'][i] = json_data['durability'][i]
     
     return json_data['health']
+
+
 
 if __name__ == '__main__':
 
@@ -122,6 +125,13 @@ if __name__ == '__main__':
     #print(json_df.shape)
     json_df['health'] = weapon_durability_fixing(json_df)
     #print(json_df.shape)
+
+    #with the above code, the card DF should be as clean as it needs to be!
+    #starting below is code to clean the deck df
+
+    
+    for df in df_list: #drops the deck_type column in important dfs as it's redundant info in the df
+        df.drop('deck_type', axis=1, inplace=True) 
 
 
 

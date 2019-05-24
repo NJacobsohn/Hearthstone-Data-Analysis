@@ -37,6 +37,8 @@ def fill_with_na(data_frame, fill_dict):
     return data_frame
 
 
+
+
 def drop_rows(data_frame, removal_dict):
     '''Drops all rows from a given data frame where the col = key in removal dict and the value@col = value in removal_dict'''
     drop_set = set()
@@ -67,11 +69,8 @@ if __name__ == '__main__':
 
     unclean_df, json_df = read_data()
     unclean_df = deck_list_create(unclean_df)
-
     ranked_decks, theorycraft, none_type, tournament = deck_dataframe_creation(unclean_df)
-
     df_list = [ranked_decks, theorycraft, none_type, tournament] #creates list of dfs to easily iterate future cleaning methods through them
-
 
     #defines dictionary for proper card.json NaN filling
     card_fill_dict = {
@@ -129,9 +128,19 @@ if __name__ == '__main__':
     #with the above code, the card DF should be as clean as it needs to be!
     #starting below is code to clean the deck df
 
+    #drops the deck_type column in important dfs as it's redundant info in the df
+     #this sorts the data frame by deck rating in order to keep the highest rated copy of each deck
+    for df in df_list: 
+        df.drop('deck_type', axis=1, inplace=True)
+        df.sort_values('rating', ascending=False, inplace=True) 
     
-    for df in df_list: #drops the deck_type column in important dfs as it's redundant info in the df
-        df.drop('deck_type', axis=1, inplace=True) 
+   
+    
+    #this drops all rows with duplicate decks, NOT using this for tournaments
+    ranked_decks.drop_duplicates('card_list', inplace=True)
+    theorycraft.drop_duplicates('card_list', inplace=True)
+    none_type.drop_duplicates('card_list', inplace=True)
+    
 
 
 
@@ -140,17 +149,17 @@ if __name__ == '__main__':
     #tavern brawl decks don't need to be conisdered most likely
         #tavern_brawl_df = unique_column_split(unclean_df, 'deck_type', type_ls[0]) #SIZE= 6360
     #this is the main and most important df
-        #ranked_deck_df = unique_column_split(unclean_df, 'deck_type', 'Ranked Deck') #SIZE= 202375
+        #ranked_deck_df = unique_column_split(unclean_df, 'deck_type', 'Ranked Deck') #SIZE= 202375, 184903 after dups 8.6%
     #not sure if this is important, might just drop it since it's so small
-        #theorycraft_df = unique_column_split(unclean_df, 'deck_type', 'Theorycraft') #SIZE= 19688
+        #theorycraft_df = unique_column_split(unclean_df, 'deck_type', 'Theorycraft') #SIZE= 19688, 19438 after removing dups 1.3%
     #what even is this HUGE dataframe, needs cleaning and sorting
-        #none_df = unique_column_split(unclean_df, 'deck_type', 'None') #SIZE= 91058
+        #none_df = unique_column_split(unclean_df, 'deck_type', 'None') #SIZE= 91058, 83309 after removing dups 8.5%
     #probably not a useful dataset given the EDA I'm trying to do
         #arena_df = unique_column_split(unclean_df, 'deck_type', type_ls[4]) #SIZE= 14095
     #pve decks are NOT important
         #pve_adventure_df = unique_column_split(unclean_df, 'deck_type', type_ls[5]) #SIZE= 9059
     #tournament decks are maybe important? (tournament meta versus popular meta?)
-        #tournament_df = unique_column_split(unclean_df, 'deck_type', 'Tournament') #SIZE= 3597
+        #tournament_df = unique_column_split(unclean_df, 'deck_type', 'Tournament') #SIZE= 3597, 2770 after remove 23% 
     
 
 

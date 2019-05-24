@@ -3,10 +3,35 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import json
 
+def read_data():
+    '''Initializes the two, uncleaned dataframes'''
+    unclean_df = pd.read_csv("data/hearthstone_decks.csv")
+    json_df = pd.read_json("data/refs.json")
+
 
 def unique_column_split(df, col_str, value):
     '''Returns a new dataframe from a given column in the dataframe where each row contains the inputted value at inputted column'''
     return pd.DataFrame(df[df[col_str] == value])
+
+ def drop_card_rows():
+     '''Drops all cards that are noncollectible or heroes'''
+        drop_set = set(json_df[json_df['collectible'] == 0].index) #starts set of all indices that need to go, in this case non-collectible cards
+        drop_set.update(set(json_df[json_df['set'] == 'HERO_SKINS'].index)) #adds the row indices of hero skins
+        drop_set.update(set(json_df[json_df['type'] == 'HERO'].index)) #removes start heroes
+        #this SHOULD leave a json with 1189 rows
+
+def drop_card_cols(cols_to_drop):
+    '''drops columns from card.json. cols are inputted as a list in cols_to_drop'''
+    json_df.drop(cols_to_drop, axis=1, inplace=True)
+
+
+
+
+def weapon_durability_fixing():
+        '''Fixes weapons having "SPELL" as health rather than their durability value'''
+        weapon_index = json_df[json_df['type'] == 'WEAPON'].index
+        for i in weapon_index:
+            json_df['health'][i] = json_df['durability'][i]
 
 
 if __name__ == '__main__':
@@ -62,13 +87,33 @@ if __name__ == '__main__':
         'entourage',
         'elite',
         'faction',
-        'flavor'
+        'flavor',
+        'playerClass',
+        'collectible', # shouldn't need this column assuming all cards in the df are correct
+        'id' #this seems like an internal blizzard id, not the id we'll be using to create deck lists
     ]
     json_df.drop(cols_to_drop, axis=1, inplace=True) #useless or redundant info
      
 
     #value cleaning
-    json_df.fillna(value={'collectible' : 0, 'hideStats' : 0, 'race' : 'None'}, inplace=True) #replaces NaN with 0 to make it easier to index
+    json_df.fillna(value={
+        'collectible' : 0, 
+        'hideStats' : 0, 
+        'race' : 'None', 
+        'attack' : 'Spell',
+        'health' : 'Spell',
+        'durability' : 'None',
+        'spellDamage' : 0,
+        'overload' : 0,
+        'text' : 'None',
+        'referencedTags' : 'None',
+        'mechanics' : 'None'
+        }, inplace=True) #replaces NaN with set values to make it easier to index
+        #this is fine but weapons now have health of spell and not durability
+
+
+   '''
+    THIS HAS BEEN IMPLEMENTED INTO A FUNCTION
 
     #row dropping test
     #this drops the rows but maintains the original index values of the rows!
@@ -78,6 +123,11 @@ if __name__ == '__main__':
     heroSkin_index = json_df[json_df['set'] == 'HERO_SKINS'].index
     json_df.drop(heroSkin_index, inplace=True) #removes alt heros from the list
     #1198 rows now
+    hero_index = set(json_df[json_df['type'] == 'SPELL'].index)
+    json_df.drop(hero_index, inplace=True) #removes standard hero portraits from df
+    #1189 rows now
+    '''
+    
 
     '''
     set_id_ls = json_df['set'].unique().tolist()
@@ -126,10 +176,8 @@ if __name__ == '__main__':
     
     #JSON_DF CURRENT COL LIST
     '''
-    ['attack', 'cardClass', 'collectible',
-    'cost', 'dbfId', 'durability',
-    'faction', 'flavor', 'health', 'id', 'mechanics',
-    'name', 'overload', 'playerClass', 'race', 
+    ['attack', 'cardClass', 'cost', 'dbfId', 'durability',
+    'health', 'mechanics', 'name', 'overload', 'race', 
     'rarity', 'referencedTags', 'set', 'spellDamage', 'text', 'type'] 
     '''
 

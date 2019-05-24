@@ -1,6 +1,7 @@
 import numpy as numpy
 import matplotlib.pyplot as plt
 import pandas as pd
+import json
 
 
 def unique_column_split(df, col_str, value):
@@ -42,7 +43,53 @@ if __name__ == '__main__':
     tournament_df = unique_column_split(clean_df, 'deck_type', type_ls[6]) #SIZE= 3597
 
 
-    df_list = [ranked_deck_df, theorycraft_df, none_df, tournament_df]
+    df_list = [ranked_deck_df, theorycraft_df, none_df, tournament_df] #creates list of dfs to easily iterate cleaning methods through them
+
+    json_df = pd.read_json("data/refs.json") #creates df of cards to index. DF is size=(3116 rows X 32 columns)
+    #this needs a LOT of column cleaning + card cleaning. No rows can be removed (I think) due to creating issues with deck lists
+
+    json_df.drop('howToEarn', axis=1, inplace=True) #useless
+    json_df.drop('howToEarnGolden', axis=1, inplace=True) #useless 
+    json_df.drop('playRequirements', axis=1, inplace=True) #useless
+
+
+
+    #DECK DF MASTER COL LIST
+    '''
+    ['craft_cost', 'date', 'deck_archetype', 'deck_class', 'deck_format',
+    'deck_id', 'deck_set', 'deck_type', 'rating', 'title', 'user', 'card_0',
+    'card_1', 'card_2', 'card_3', 'card_4', 'card_5', 'card_6', 'card_7',
+    'card_8', 'card_9', 'card_10', 'card_11', 'card_12', 'card_13', 'card_14', 
+    'card_15', 'card_16', 'card_17', 'card_18', 'card_19', 'card_20', 'card_21', 
+    'card_22', 'card_23', 'card_24', 'card_25', 'card_26', 'card_27', 'card_28', 
+    'card_29']
+    '''
+
+    #DECK DF CURRENT COL LIST
+    '''
+    ['craft_cost', 'date', 'deck_archetype', 'deck_class', 'deck_format',
+    'deck_id', 'deck_set', 'deck_type', 'rating', 'title', 'user', 'card_list']
+    '''
+
+    #JSON_DF MASTER COL LIST
+    '''
+    ['artist', 'attack', 'cardClass', 'classes', 'collectible',
+    'collectionText', 'cost', 'dbfId', 'durability', 'elite', 'entourage',
+    'faction', 'flavor', 'health', 'hideStats', 'howToEarn', 'howToEarnGolden', 'id', 'mechanics',
+    'multiClassGroup', 'name', 'overload', 'playRequirements',
+    'playerClass', 'race', 'rarity', 'referencedTags', 'set', 'spellDamage',
+    'targetingArrowText', 'text', 'type'] 
+    '''
+    
+    #JSON_DF CURRENT COL LIST
+    '''
+    ['artist', 'attack', 'cardClass', 'classes', 'collectible',
+    'collectionText', 'cost', 'dbfId', 'durability', 'elite', 'entourage',
+    'faction', 'flavor', 'health', 'hideStats', 'id', 'mechanics',
+    'multiClassGroup', 'name', 'overload', 'playerClass', 'race', 
+    'rarity', 'referencedTags', 'set', 'spellDamage',
+    'targetingArrowText', 'text', 'type'] 
+    '''
 
     
 

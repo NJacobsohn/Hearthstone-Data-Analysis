@@ -48,10 +48,53 @@ if __name__ == '__main__':
     json_df = pd.read_json("data/refs.json") #creates df of cards to index. DF is size=(3116 rows X 32 columns)
     #this needs a LOT of column cleaning + card cleaning. No rows can be removed (I think) due to creating issues with deck lists
 
-    json_df.drop('howToEarn', axis=1, inplace=True) #useless
-    json_df.drop('howToEarnGolden', axis=1, inplace=True) #useless 
-    json_df.drop('playRequirements', axis=1, inplace=True) #useless
+    #column dropping
+    cols_to_drop = [
+        'howToEarn',
+        'howToEarnGolden',
+        'playRequirements',
+        'artist',
+        'collectionText',
+        'classes',
+        'multiClassGroup',
+        'hideStats',
+        'targetingArrowText',
+        'entourage',
+        'elite',
+        'faction',
+        'flavor'
+    ]
+    json_df.drop(cols_to_drop, axis=1, inplace=True) #useless or redundant info
+     
 
+    #value cleaning
+    json_df.fillna(value={'collectible' : 0, 'hideStats' : 0, 'race' : 'None'}, inplace=True) #replaces NaN with 0 to make it easier to index
+
+    #row dropping test
+    #this drops the rows but maintains the original index values of the rows!
+    collectible0_index = json_df[json_df['collectible'] == 0].index 
+    json_df.drop(collectible0_index, inplace=True) #this *SHOULD* remove all non-playable cards in the game
+    #1206 rows now
+    heroSkin_index = json_df[json_df['set'] == 'HERO_SKINS'].index
+    json_df.drop(heroSkin_index, inplace=True) #removes alt heros from the list
+    #1198 rows now
+
+    '''
+    set_id_ls = json_df['set'].unique().tolist()
+    for id in set_id_ls:
+        collect_sum = json_df[json_df['set'] == id]['collectible'].sum()
+        collect_count = json_df[json_df['set'] == id]['collectible'].count()
+        print("# of collectible cards in {} out of total = {} / {}".format(id, collect_sum, collect_count))
+        ''' #code used to check proportion of collectible cards in each set
+
+    # SET IDs
+    #['TGT', 'GANGS', 'CORE', 'UNGORO', 'EXPERT1', 'HOF', 'OG', 'BRM',
+    #   'GVG', 'KARA', 'LOE', 'NAXX']
+    '''
+    These columns need to be certain values for a card to actually exist
+        collectible = 1
+
+    '''
 
 
     #DECK DF MASTER COL LIST
@@ -78,17 +121,16 @@ if __name__ == '__main__':
     'faction', 'flavor', 'health', 'hideStats', 'howToEarn', 'howToEarnGolden', 'id', 'mechanics',
     'multiClassGroup', 'name', 'overload', 'playRequirements',
     'playerClass', 'race', 'rarity', 'referencedTags', 'set', 'spellDamage',
-    'targetingArrowText', 'text', 'type'] 
+    'text', 'type'] 
     '''
     
     #JSON_DF CURRENT COL LIST
     '''
-    ['artist', 'attack', 'cardClass', 'classes', 'collectible',
-    'collectionText', 'cost', 'dbfId', 'durability', 'elite', 'entourage',
-    'faction', 'flavor', 'health', 'hideStats', 'id', 'mechanics',
-    'multiClassGroup', 'name', 'overload', 'playerClass', 'race', 
-    'rarity', 'referencedTags', 'set', 'spellDamage',
-    'targetingArrowText', 'text', 'type'] 
+    ['attack', 'cardClass', 'collectible',
+    'cost', 'dbfId', 'durability',
+    'faction', 'flavor', 'health', 'id', 'mechanics',
+    'name', 'overload', 'playerClass', 'race', 
+    'rarity', 'referencedTags', 'set', 'spellDamage', 'text', 'type'] 
     '''
 
     

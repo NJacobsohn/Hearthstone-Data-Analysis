@@ -7,24 +7,43 @@ def read_data():
     '''Initializes the two, uncleaned dataframes'''
     unclean_df = pd.read_csv("data/hearthstone_decks.csv")
     json_df = pd.read_json("data/refs.json")
+    return unclean_df, json_df
 
+def deck_list_create(unclean_df):
+    '''takes the deck dataframe and combines all the single card columns into a single columns with a list of dbfIds'''
+    card_col_ls = ['card_{}'.format(i) for i in range(30)] #creates list of column names for cards
+    big_card_df = pd.DataFrame(unclean_df[card_col_ls], columns=card_col_ls) #creates a new dataframe with JUST the card columns
+    unclean_df['card_list'] = big_card_df.values.tolist() #makes new column where each value in big_card_df is compressed into a list for reach row
+    unclean_df.drop(card_col_ls, axis=1, inplace=True) #drops single card lists in favor of the new listed one
+    return unclean_df
+
+def deck_dataframe_creation(unclean_df):
+    ranked_deck_df = unique_column_split(unclean_df, 'deck_type', 'Ranked Deck')
+    theorycraft_df = unique_column_split(unclean_df, 'deck_type', 'Theorycraft')
+    none_df = unique_column_split(unclean_df, 'deck_type', 'None')
+    tournament_df = unique_column_split(unclean_df, 'deck_type', 'Tournament')
+
+    return ranked_deck_df, theorycraft_df, none_df, tournament_df
 
 def unique_column_split(df, col_str, value):
     '''Returns a new dataframe from a given column in the dataframe where each row contains the inputted value at inputted column'''
     return pd.DataFrame(df[df[col_str] == value])
 
- def drop_card_rows():
-     '''Drops all cards that are noncollectible or heroes'''
-        drop_set = set(json_df[json_df['collectible'] == 0].index) #starts set of all indices that need to go, in this case non-collectible cards
-        drop_set.update(set(json_df[json_df['set'] == 'HERO_SKINS'].index)) #adds the row indices of hero skins
-        drop_set.update(set(json_df[json_df['type'] == 'HERO'].index)) #removes start heroes
-        #this SHOULD leave a json with 1189 rows
+def fill_card_na(fill_dict):
+    '''Fills NaN values on card df according to dictionary input'''
+    json_df.fillna(value=fill_dict, inplace=True)
+
+
+def drop_card_rows():
+    '''Drops all cards that are noncollectible or heroes'''
+    drop_set = set(json_df[json_df['collectible'] == 0].index) #starts set of all indices that need to go, in this case non-collectible cards
+    drop_set.update(set(json_df[json_df['set'] == 'HERO_SKINS'].index)) #adds the row indices of hero skins
+    drop_set.update(set(json_df[json_df['type'] == 'HERO'].index)) #removes start heroes
+    #this SHOULD leave a json with 1189 rows
 
 def drop_card_cols(cols_to_drop):
     '''drops columns from card.json. cols are inputted as a list in cols_to_drop'''
     json_df.drop(cols_to_drop, axis=1, inplace=True)
-
-
 
 
 def weapon_durability_fixing():
@@ -35,45 +54,15 @@ def weapon_durability_fixing():
 
 
 if __name__ == '__main__':
-    unclean_df = pd.read_csv("data/hearthstone_decks.csv")
-    card_col_ls = ['card_{}'.format(i) for i in range(30)] #creates list of column names for cards
-    big_card_df = pd.DataFrame(unclean_df[card_col_ls], columns=card_col_ls) #creates a new dataframe with JUST the card columns
-    clean_df = unclean_df.copy() #creates copy of unclean_df as backup/new work space
-    clean_df['card_list'] = big_card_df.values.tolist() #makes new column where each value in big_card_df is compressed into a list for reach row
-    clean_df.drop(card_col_ls, axis=1, inplace=True) #drops single card lists in favor of the new listed one
 
-    #deck_type column has 7 types, going to put each type in its own df to properly separate them and make things easier to work through
+    unclean_df, json_df = read_data()
+    unclean_df = deck_list_create(unclean_df)
 
-    type_ls = list(clean_df['deck_type'].unique()) #makes list of unique values
+    ranked_decks, theorycraft, none_type, tournament = deck_dataframe_creation(unclean_df)
 
-    #tavern brawl decks don't need to be conisdered most likely
-    #tavern_brawl_df = unique_column_split(clean_df, 'deck_type', type_ls[0]) #SIZE= 6360
+    df_list = [ranked_decks, theorycraft, none_type, tournament] #creates list of dfs to easily iterate cleaning methods through them
 
-    #this is the main and most important df
-    ranked_deck_df = unique_column_split(clean_df, 'deck_type', type_ls[1]) #SIZE= 202375
-
-    #not sure if this is important, might just drop it since it's so small
-    theorycraft_df = unique_column_split(clean_df, 'deck_type', type_ls[2]) #SIZE= 19688
-
-    #what even is this HUGE dataframe, needs cleaning and sorting
-    none_df = unique_column_split(clean_df, 'deck_type', type_ls[3]) #SIZE= 91058
-
-    #probably not a useful dataset given the EDA I'm trying to do
-    #arena_df = unique_column_split(clean_df, 'deck_type', type_ls[4]) #SIZE= 14095
-
-    #pve decks are NOT important
-    #pve_adventure_df = unique_column_split(clean_df, 'deck_type', type_ls[5]) #SIZE= 9059
-
-    #tournament decks are maybe important? (tournament meta versus popular meta?)
-    tournament_df = unique_column_split(clean_df, 'deck_type', type_ls[6]) #SIZE= 3597
-
-
-    df_list = [ranked_deck_df, theorycraft_df, none_df, tournament_df] #creates list of dfs to easily iterate cleaning methods through them
-
-    json_df = pd.read_json("data/refs.json") #creates df of cards to index. DF is size=(3116 rows X 32 columns)
-    #this needs a LOT of column cleaning + card cleaning. No rows can be removed (I think) due to creating issues with deck lists
-
-    #column dropping
+    #defines card.json cols to drop
     cols_to_drop = [
         'howToEarn',
         'howToEarnGolden',
@@ -91,12 +80,10 @@ if __name__ == '__main__':
         'playerClass',
         'collectible', # shouldn't need this column assuming all cards in the df are correct
         'id' #this seems like an internal blizzard id, not the id we'll be using to create deck lists
-    ]
-    json_df.drop(cols_to_drop, axis=1, inplace=True) #useless or redundant info
-     
-
-    #value cleaning
-    json_df.fillna(value={
+        ]
+   
+    #defines dictionary for proper card.json NaN filling
+    fill_dict = {
         'collectible' : 0, 
         'hideStats' : 0, 
         'race' : 'None', 
@@ -108,11 +95,55 @@ if __name__ == '__main__':
         'text' : 'None',
         'referencedTags' : 'None',
         'mechanics' : 'None'
-        }, inplace=True) #replaces NaN with set values to make it easier to index
-        #this is fine but weapons now have health of spell and not durability
+        } 
+        
+   
+    '''This is a function now'''
+    #unclean_df = pd.read_csv("data/hearthstone_decks.csv")
+    #json_df = pd.read_json("data/refs.json") #creates df of cards to index. DF is size=(3116 rows X 32 columns)
+    #this needs a LOT of column cleaning + card cleaning. Rows can be removed! The dbfId column is what is used to index from the decklist
 
 
-   '''
+    '''This is a function now'''
+    #card_col_ls = ['card_{}'.format(i) for i in range(30)] #creates list of column names for cards
+    #big_card_df = pd.DataFrame(unclean_df[card_col_ls], columns=card_col_ls) #creates a new dataframe with JUST the card columns
+    #clean_df = unclean_df.copy() #creates copy of unclean_df as backup/new work space
+    #clean_df['card_list'] = big_card_df.values.tolist() #makes new column where each value in big_card_df is compressed into a list for reach row
+    #clean_df.drop(card_col_ls, axis=1, inplace=True) #drops single card lists in favor of the new listed one
+
+    #deck_type column has 7 types, going to put each type in its own df to properly separate them and make things easier to work through
+
+    #type_ls = list(unclean_df['deck_type'].unique()) #makes list of unique values
+
+    #tavern brawl decks don't need to be conisdered most likely
+    #tavern_brawl_df = unique_column_split(unclean_df, 'deck_type', type_ls[0]) #SIZE= 6360
+
+    #this is the main and most important df
+    #ranked_deck_df = unique_column_split(unclean_df, 'deck_type', 'Ranked Deck') #SIZE= 202375
+
+    #not sure if this is important, might just drop it since it's so small
+    #theorycraft_df = unique_column_split(unclean_df, 'deck_type', 'Theorycraft') #SIZE= 19688
+
+    #what even is this HUGE dataframe, needs cleaning and sorting
+    #none_df = unique_column_split(unclean_df, 'deck_type', 'None') #SIZE= 91058
+
+    #probably not a useful dataset given the EDA I'm trying to do
+    #arena_df = unique_column_split(unclean_df, 'deck_type', type_ls[4]) #SIZE= 14095
+
+    #pve decks are NOT important
+    #pve_adventure_df = unique_column_split(unclean_df, 'deck_type', type_ls[5]) #SIZE= 9059
+
+    #tournament decks are maybe important? (tournament meta versus popular meta?)
+    #tournament_df = unique_column_split(unclean_df, 'deck_type', 'Tournament') #SIZE= 3597
+
+
+
+    '''This is a function now'''
+    #json_df.drop(cols_to_drop, axis=1, inplace=True) #useless or redundant info
+     
+
+
+    '''
     THIS HAS BEEN IMPLEMENTED INTO A FUNCTION
 
     #row dropping test

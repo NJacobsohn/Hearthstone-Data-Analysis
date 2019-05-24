@@ -18,6 +18,7 @@ def deck_list_create(unclean_df):
     return unclean_df
 
 def deck_dataframe_creation(unclean_df):
+    '''creates dataframes for different important deck types, none needs to be cleaned'''
     ranked_deck_df = unique_column_split(unclean_df, 'deck_type', 'Ranked Deck')
     theorycraft_df = unique_column_split(unclean_df, 'deck_type', 'Theorycraft')
     none_df = unique_column_split(unclean_df, 'deck_type', 'None')
@@ -37,9 +38,6 @@ def fill_with_na(data_frame, fill_dict):
 
 def drop_rows(data_frame, removal_dict):
     '''Drops all rows from a given data frame where the col = key in removal dict and the value@col = value in removal_dict'''
-    #drop_set.update(set(json_df[json_df['collectible'] == 0].index)) #starts set of all indices that need to go, in this case non-collectible cards
-    #drop_set.update(set(json_df[json_df['set'] == 'HERO_SKINS'].index)) #adds the row indices of hero skins
-    #drop_set.update(set(json_df[json_df['type'] == 'HERO'].index)) #removes start heroes
     drop_set = set()
     for key, value in removal_dict.items():
         drop_set.update(set(data_frame[data_frame[key] == value].index))
@@ -123,31 +121,25 @@ if __name__ == '__main__':
 
 
     #deck_type column has 7 types, going to put each type in its own df to properly separate them and make things easier to work through
-
     #type_ls = list(unclean_df['deck_type'].unique()) #makes list of unique values
-
     #tavern brawl decks don't need to be conisdered most likely
-    #tavern_brawl_df = unique_column_split(unclean_df, 'deck_type', type_ls[0]) #SIZE= 6360
-
+        #tavern_brawl_df = unique_column_split(unclean_df, 'deck_type', type_ls[0]) #SIZE= 6360
     #this is the main and most important df
-    #ranked_deck_df = unique_column_split(unclean_df, 'deck_type', 'Ranked Deck') #SIZE= 202375
-
+        #ranked_deck_df = unique_column_split(unclean_df, 'deck_type', 'Ranked Deck') #SIZE= 202375
     #not sure if this is important, might just drop it since it's so small
-    #theorycraft_df = unique_column_split(unclean_df, 'deck_type', 'Theorycraft') #SIZE= 19688
-
+        #theorycraft_df = unique_column_split(unclean_df, 'deck_type', 'Theorycraft') #SIZE= 19688
     #what even is this HUGE dataframe, needs cleaning and sorting
-    #none_df = unique_column_split(unclean_df, 'deck_type', 'None') #SIZE= 91058
-
+        #none_df = unique_column_split(unclean_df, 'deck_type', 'None') #SIZE= 91058
     #probably not a useful dataset given the EDA I'm trying to do
-    #arena_df = unique_column_split(unclean_df, 'deck_type', type_ls[4]) #SIZE= 14095
-
+        #arena_df = unique_column_split(unclean_df, 'deck_type', type_ls[4]) #SIZE= 14095
     #pve decks are NOT important
-    #pve_adventure_df = unique_column_split(unclean_df, 'deck_type', type_ls[5]) #SIZE= 9059
-
+        #pve_adventure_df = unique_column_split(unclean_df, 'deck_type', type_ls[5]) #SIZE= 9059
     #tournament decks are maybe important? (tournament meta versus popular meta?)
-    #tournament_df = unique_column_split(unclean_df, 'deck_type', 'Tournament') #SIZE= 3597
+        #tournament_df = unique_column_split(unclean_df, 'deck_type', 'Tournament') #SIZE= 3597
     
 
+
+    #code used to check proportion of collectible cards in each set
     '''
     set_id_ls = json_df['set'].unique().tolist()
     for id in set_id_ls:
@@ -155,11 +147,13 @@ if __name__ == '__main__':
         collect_count = json_df[json_df['set'] == id]['collectible'].count()
         print("# of collectible cards in {} out of total = {} / {}".format(id, collect_sum, collect_count))
     ''' 
-    #code used to check proportion of collectible cards in each set
+    
 
     # SET IDs
-    #['TGT', 'GANGS', 'CORE', 'UNGORO', 'EXPERT1', 'HOF', 'OG', 'BRM',
-    #   'GVG', 'KARA', 'LOE', 'NAXX']
+    '''
+    ['TGT', 'GANGS', 'CORE', 'UNGORO', 'EXPERT1', 'HOF', 
+    'OG', 'BRM', 'GVG', 'KARA', 'LOE', 'NAXX']
+    '''
 
 
 

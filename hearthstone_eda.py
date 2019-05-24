@@ -29,29 +29,38 @@ def unique_column_split(df, col_str, value):
     '''Returns a new dataframe from a given column in the dataframe where each row contains the inputted value at inputted column'''
     return pd.DataFrame(df[df[col_str] == value])
 
-def fill_card_na(fill_dict):
-    '''Fills NaN values on card df according to dictionary input'''
-    json_df.fillna(value=fill_dict, inplace=True)
+def fill_with_na(data_frame, fill_dict):
+    '''Fills NaN values in given dataframe according to dictionary input'''
+    data_frame.fillna(value=fill_dict, inplace=True)
+    return data_frame
 
 
-def drop_card_rows():
-    '''Drops all cards that are noncollectible or heroes'''
-    drop_set = set(json_df[json_df['collectible'] == 0].index) #starts set of all indices that need to go, in this case non-collectible cards
-    drop_set.update(set(json_df[json_df['set'] == 'HERO_SKINS'].index)) #adds the row indices of hero skins
-    drop_set.update(set(json_df[json_df['type'] == 'HERO'].index)) #removes start heroes
-    #this SHOULD leave a json with 1189 rows
+def drop_rows(data_frame, removal_dict):
+    '''Drops all rows from a given data frame where the col = key in removal dict and the value@col = value in removal_dict'''
+    #drop_set.update(set(json_df[json_df['collectible'] == 0].index)) #starts set of all indices that need to go, in this case non-collectible cards
+    #drop_set.update(set(json_df[json_df['set'] == 'HERO_SKINS'].index)) #adds the row indices of hero skins
+    #drop_set.update(set(json_df[json_df['type'] == 'HERO'].index)) #removes start heroes
+    drop_set = set()
+    for key, value in removal_dict.items():
+        drop_set.update(set(data_frame[data_frame[key] == value].index))
+    data_frame.drop(drop_set, inplace=True)
 
-def drop_card_cols(cols_to_drop):
-    '''drops columns from card.json. cols are inputted as a list in cols_to_drop'''
-    json_df.drop(cols_to_drop, axis=1, inplace=True)
+    return data_frame
+    
+
+def drop_cols(data_frame, cols_to_drop):
+    '''drops columns from given dataframe. cols are inputted as a list in cols_to_drop'''
+    data_frame.drop(cols_to_drop, axis=1, inplace=True)
+    return data_frame
 
 
-def weapon_durability_fixing():
-        '''Fixes weapons having "SPELL" as health rather than their durability value'''
-        weapon_index = json_df[json_df['type'] == 'WEAPON'].index
-        for i in weapon_index:
-            json_df['health'][i] = json_df['durability'][i]
-
+def weapon_durability_fixing(json_data):
+    '''Fixes weapons having "SPELL" as health rather than their durability value'''
+    weapon_index = json_data[json_data['type'] == 'WEAPON'].index
+    for i in weapon_index:
+        json_data['health'][i] = json_data['durability'][i]
+    
+    return json_data['health']
 
 if __name__ == '__main__':
 
@@ -62,8 +71,31 @@ if __name__ == '__main__':
 
     df_list = [ranked_decks, theorycraft, none_type, tournament] #creates list of dfs to easily iterate cleaning methods through them
 
+
+    #defines dictionary for proper card.json NaN filling
+    card_fill_dict = {
+        'collectible' : 0, 
+        'hideStats' : 0, 
+        'race' : 'None', 
+        'attack' : 'Spell',
+        'health' : 'Spell',
+        'durability' : 'None',
+        'spellDamage' : 0,
+        'overload' : 0,
+        'text' : 'None',
+        'referencedTags' : 'None',
+        'mechanics' : 'None'
+        } 
+
+    #tells what rows to drop. Where col(key) == value
+    card_row_drop_dict = {
+        'collectible' : 0,
+        'set' : 'HERO_SKINS',
+        'type' : 'HERO'
+    }
+
     #defines card.json cols to drop
-    cols_to_drop = [
+    card_cols_to_drop = [
         'howToEarn',
         'howToEarnGolden',
         'playRequirements',
@@ -81,36 +113,23 @@ if __name__ == '__main__':
         'collectible', # shouldn't need this column assuming all cards in the df are correct
         'id' #this seems like an internal blizzard id, not the id we'll be using to create deck lists
         ]
-   
-    #defines dictionary for proper card.json NaN filling
-    fill_dict = {
-        'collectible' : 0, 
-        'hideStats' : 0, 
-        'race' : 'None', 
-        'attack' : 'Spell',
-        'health' : 'Spell',
-        'durability' : 'None',
-        'spellDamage' : 0,
-        'overload' : 0,
-        'text' : 'None',
-        'referencedTags' : 'None',
-        'mechanics' : 'None'
-        } 
-        
-   
-    '''This is a function now'''
-    #unclean_df = pd.read_csv("data/hearthstone_decks.csv")
-    #json_df = pd.read_json("data/refs.json") #creates df of cards to index. DF is size=(3116 rows X 32 columns)
-    #this needs a LOT of column cleaning + card cleaning. Rows can be removed! The dbfId column is what is used to index from the decklist
+
+    #ORDER IS IMPORTANT HERE, MUST DO THIS ORDER
+    json_df = fill_with_na(json_df, card_fill_dict)
+    print(json_df.shape)
+
+    json_df = drop_rows(json_df, card_row_drop_dict)
+    print(json_df.shape)
+
+    json_df = drop_cols(json_df, card_cols_to_drop)
+    print(json_df.shape)
+
+    json_df['health'] = weapon_durability_fixing(json_df)
+    print(json_df.shape)
 
 
-    '''This is a function now'''
-    #card_col_ls = ['card_{}'.format(i) for i in range(30)] #creates list of column names for cards
-    #big_card_df = pd.DataFrame(unclean_df[card_col_ls], columns=card_col_ls) #creates a new dataframe with JUST the card columns
-    #clean_df = unclean_df.copy() #creates copy of unclean_df as backup/new work space
-    #clean_df['card_list'] = big_card_df.values.tolist() #makes new column where each value in big_card_df is compressed into a list for reach row
-    #clean_df.drop(card_col_ls, axis=1, inplace=True) #drops single card lists in favor of the new listed one
 
+    #this SHOULD leave the card json with 1189 rows
     #deck_type column has 7 types, going to put each type in its own df to properly separate them and make things easier to work through
 
     #type_ls = list(unclean_df['deck_type'].unique()) #makes list of unique values
@@ -135,14 +154,7 @@ if __name__ == '__main__':
 
     #tournament decks are maybe important? (tournament meta versus popular meta?)
     #tournament_df = unique_column_split(unclean_df, 'deck_type', 'Tournament') #SIZE= 3597
-
-
-
-    '''This is a function now'''
-    #json_df.drop(cols_to_drop, axis=1, inplace=True) #useless or redundant info
      
-
-
     '''
     THIS HAS BEEN IMPLEMENTED INTO A FUNCTION
 

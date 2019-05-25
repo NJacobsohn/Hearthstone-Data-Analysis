@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import json
+import scipy.stats as stats
 
 def read_data():
     '''Initializes the two, uncleaned dataframes'''
@@ -24,7 +25,6 @@ def deck_dataframe_creation(unclean_df):
     theorycraft_df = unique_column_split(unclean_df, 'deck_type', 'Theorycraft')
     none_df = unique_column_split(unclean_df, 'deck_type', 'None')
     tournament_df = unique_column_split(unclean_df, 'deck_type', 'Tournament')
-
     return ranked_deck_df, theorycraft_df, none_df, tournament_df
 
 def unique_column_split(df, col_str, value):
@@ -37,15 +37,12 @@ def fill_with_na(data_frame, fill_dict):
     return data_frame
 
 
-
-
 def drop_rows(data_frame, removal_dict):
     '''Drops all rows from a given data frame where the col = key in removal dict and the value@col = value in removal_dict'''
     drop_set = set()
     for key, value in removal_dict.items():
         drop_set.update(set(data_frame[data_frame[key] == value].index))
     data_frame.drop(drop_set, inplace=True)
-
     return data_frame
     
 
@@ -60,9 +57,7 @@ def weapon_durability_fixing(json_data):
     weapon_index = json_data[json_data['type'] == 'WEAPON'].index
     for i in weapon_index:
         json_data['health'][i] = json_data['durability'][i]
-    
     return json_data['health']
-
 
 
 if __name__ == '__main__':
@@ -110,7 +105,7 @@ if __name__ == '__main__':
         'faction',
         'flavor',
         'playerClass',
-        'collectible', # shouldn't need this column assuming all cards in the df are correct
+        'collectible', #shouldn't need this column assuming all cards in the df are correct
         'id' #this seems like an internal blizzard id, not the id we'll be using to create deck lists
         ]
 
@@ -125,11 +120,22 @@ if __name__ == '__main__':
     json_df['health'] = weapon_durability_fixing(json_df)
     #print(json_df.shape)
 
+    
+
+
     #with the above code, the card DF should be as clean as it needs to be!
+
+    #this code just makes a smaller dataframe with just the card ids and names, might be useful but also might be pointless
+    card_id_df = pd.DataFrame()
+    card_id_df['dbfId'], card_id_df['name'] = json_df['dbfId'], json_df['name']
+    card_id_df.sort_values('dbfId', ascending=True, inplace=True)
+
+
+
     #starting below is code to clean the deck df
 
     #drops the deck_type column in important dfs as it's redundant info in the df
-     #this sorts the data frame by deck rating in order to keep the highest rated copy of each deck
+    #this sorts the data frame by deck rating in order to keep the highest rated copy of each deck
     for df in df_list: 
         df.drop('deck_type', axis=1, inplace=True)
         df.sort_values('rating', ascending=False, inplace=True) 

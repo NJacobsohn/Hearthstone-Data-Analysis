@@ -22,10 +22,9 @@ def deck_list_create(unclean_df):
 def deck_dataframe_creation(unclean_df):
     '''creates dataframes for different important deck types, none needs to be cleaned'''
     ranked_deck_df = unique_column_split(unclean_df, 'deck_type', 'Ranked Deck')
-    theorycraft_df = unique_column_split(unclean_df, 'deck_type', 'Theorycraft')
     none_df = unique_column_split(unclean_df, 'deck_type', 'None')
     tournament_df = unique_column_split(unclean_df, 'deck_type', 'Tournament')
-    return ranked_deck_df, theorycraft_df, none_df, tournament_df
+    return ranked_deck_df, none_df, tournament_df
 
 def unique_column_split(df, col_str, value):
     '''Returns a new dataframe from a given column in the dataframe where each row contains the inputted value at inputted column'''
@@ -64,8 +63,8 @@ if __name__ == '__main__':
 
     unclean_df, json_df = read_data()
     unclean_df = deck_list_create(unclean_df)
-    ranked_decks, theorycraft, none_type, tournament = deck_dataframe_creation(unclean_df)
-    df_list = [ranked_decks, theorycraft, none_type, tournament] #creates list of dfs to easily iterate future cleaning methods through them
+    ranked_decks, none_type, tournament = deck_dataframe_creation(unclean_df)
+    df_list = [ranked_decks, none_type, tournament] #creates list of dfs to easily iterate future cleaning methods through them
 
     #defines dictionary for proper card.json NaN filling
     card_fill_dict = {
@@ -144,39 +143,32 @@ if __name__ == '__main__':
     
     #this drops all rows with duplicate decks, NOT using this for tournaments
     ranked_decks.drop_duplicates('card_list', inplace=True)
-    theorycraft.drop_duplicates('card_list', inplace=True)
     none_type.drop_duplicates('card_list', inplace=True)
     
+    for df in df_list:
+        df['date'] = pd.to_datetime(df['date'])
+
+    #makes dfs for each year, from here it's easier to work on a month by month standpoint
+    ranked_decks_2014 = ranked_decks[ranked_decks['date'].map(lambda x: x.year == 2014)]
+    ranked_decks_2015 = ranked_decks[ranked_decks['date'].map(lambda x: x.year == 2015)]
+    ranked_decks_2016 = ranked_decks[ranked_decks['date'].map(lambda x: x.year == 2016)]
+    ranked_decks_2017 = ranked_decks[ranked_decks['date'].map(lambda x: x.year == 2017)]
+
+    tournament_2014 = tournament[tournament['date'].map(lambda x: x.year == 2014)]
+    tournament_2015 = tournament[tournament['date'].map(lambda x: x.year == 2015)]
+    tournament_2016 = tournament[tournament['date'].map(lambda x: x.year == 2016)]
+    tournament_2017 = tournament[tournament['date'].map(lambda x: x.year == 2017)]
 
 
-
-    #deck_type column has 7 types, going to put each type in its own df to properly separate them and make things easier to work through
     #type_ls = list(unclean_df['deck_type'].unique()) #makes list of unique values
-    #tavern brawl decks don't need to be conisdered most likely
-        #tavern_brawl_df = unique_column_split(unclean_df, 'deck_type', type_ls[0]) #SIZE= 6360
     #this is the main and most important df
         #ranked_deck_df = unique_column_split(unclean_df, 'deck_type', 'Ranked Deck') #SIZE= 202375, 184903 after dups 8.6%
     #not sure if this is important, might just drop it since it's so small
         #theorycraft_df = unique_column_split(unclean_df, 'deck_type', 'Theorycraft') #SIZE= 19688, 19438 after removing dups 1.3%
     #what even is this HUGE dataframe, needs cleaning and sorting
         #none_df = unique_column_split(unclean_df, 'deck_type', 'None') #SIZE= 91058, 83309 after removing dups 8.5%
-    #probably not a useful dataset given the EDA I'm trying to do
-        #arena_df = unique_column_split(unclean_df, 'deck_type', type_ls[4]) #SIZE= 14095
-    #pve decks are NOT important
-        #pve_adventure_df = unique_column_split(unclean_df, 'deck_type', type_ls[5]) #SIZE= 9059
     #tournament decks are maybe important? (tournament meta versus popular meta?)
         #tournament_df = unique_column_split(unclean_df, 'deck_type', 'Tournament') #SIZE= 3597, 2770 after remove 23% 
-    
-
-
-    #code used to check proportion of collectible cards in each set
-    '''
-    set_id_ls = json_df['set'].unique().tolist()
-    for id in set_id_ls:
-        collect_sum = json_df[json_df['set'] == id]['collectible'].sum()
-        collect_count = json_df[json_df['set'] == id]['collectible'].count()
-        print("# of collectible cards in {} out of total = {} / {}".format(id, collect_sum, collect_count))
-    ''' 
     
 
     # SET IDs

@@ -150,9 +150,13 @@ if __name__ == '__main__':
 
     #makes dfs for each year, from here it's easier to work on a month by month standpoint
     ranked_decks_2014 = ranked_decks[ranked_decks['date'].map(lambda x: x.year == 2014)]
+    ranked_decks_2014['month'] = ranked_decks_2014['date'].map(lambda x: x.month)
     ranked_decks_2015 = ranked_decks[ranked_decks['date'].map(lambda x: x.year == 2015)]
+    ranked_decks_2015['month'] = ranked_decks_2015['date'].map(lambda x: x.month)
     ranked_decks_2016 = ranked_decks[ranked_decks['date'].map(lambda x: x.year == 2016)]
+    ranked_decks_2016['month'] = ranked_decks_2016['date'].map(lambda x: x.month)
     ranked_decks_2017 = ranked_decks[ranked_decks['date'].map(lambda x: x.year == 2017)]
+    ranked_decks_2017['month'] = ranked_decks_2017['date'].map(lambda x: x.month)
 
     tournament_2014 = tournament[tournament['date'].map(lambda x: x.year == 2014)]
     tournament_2015 = tournament[tournament['date'].map(lambda x: x.year == 2015)]

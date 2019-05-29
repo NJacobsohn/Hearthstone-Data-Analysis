@@ -8,7 +8,10 @@ The dataset was pulled from a popular deck sharing website called [hearthpwn](ht
 ## **Cleaning**
 It's immediately obvious that there's a lot of bad data in here. With the card json, it was easy to decide what to keep. Only cards that are collectible, and that can be put into a deck were kept into consideration. The decks were a bit of a challenge, but ultimately I separated the main dataset into a couple, smaller dataframes with pandas. I ended up with only the decks that were created for use in the ranked gamemode, about 200,000 entries. From there I organized the data by each deck's user rating, and removed all duplicate entries, bringing the total data sample size to 184,903 decks.
 ## **Visualization**
+What really wanted to know about this data (as a former player) is how balance updates to certain cards or new releases affect what is played or popular. As a starting point, this is the total amount of deck uploads per content update.
 ![Uploads per Patch][patch_uploads]
 
 [patch_uploads]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/deck_uploads_per_patch.png
+
+While this might be interesting to look as for someone who's played the game before, I want to also show how each of these events affected uploads throughout the overall timeline of the game.
 ## **Conclusion**

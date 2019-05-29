@@ -32,9 +32,10 @@ Taking a look at the most popular class per patch (based on total number of deck
 
 While this may not look interesting, the two patches where priest was the most uploaded deck could actually be a farce. While yes, the most user-made decks during that time were Priest decks, it's very likey the most played class was not priest. The Karazhan content release could theoretically have created a large skew in the deck uploads due to a certain card called Purify.
 
-![Purify][purify]
+<p align="center">
+  <img width="200" height="250" src="img/purify.png">
+</p>
 
-[purify]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/purify.png
 
 It was by miles the worst card that had been added to the game, which means everyone wanted to make a deck where it was good to try and prove... something? I strongly believe this card single handedly skewed the priest data. If we take a look at the highest rated deck per patch, it supports this data as well.
 

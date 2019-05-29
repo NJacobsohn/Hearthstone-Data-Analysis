@@ -13,5 +13,26 @@ What really wanted to know about this data (as a former player) is how balance u
 
 [patch_uploads]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/deck_uploads_per_patch.png
 
-While this might be interesting to look as for someone who's played the game before, I want to also show how each of these events affected uploads throughout the overall timeline of the game.
+While this might be interesting to look as for someone who's played the game before, I want to also show how each of these compared to uploads throughout the overall timeline of the game.
+
+![Patch versus Month][patch_versus_month]
+
+[patch_versus_month]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/month_versus_patch.png
+
+This shows the total amount of uploads per content release compared to the overall monthly uploads. As the popularity of the game rises, the avg yearly uploads trends upwards despite certain changes or expansions being less popular than previous ones. This is most visible on the Explorers set, the most popular set as far as uploads are concerned, yet the largest upload months were the months around the Old Gods and Gagdetzan expansion releases.
+
+
+Another thing I wanted to visualize was the most popular class and deck for each content update. While this might be the most interesting to people who play the game, it can give a cool insight on how the meta adjusts when things are changed.
+
+Taking a look at the most popular class per patch (based on total number of deck uploads) actually tells us a lot.
+
+![Class pop per Patch][class_pop_per_patch]
+
+[class_pop_per_patch]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/most_popular_class_per_patch.png
+
+While this may not look interesting, the three patches where priest was the most uploaded deck could actually be a farce. While yes, the most user-made decks during that time were Priest decks, it's very likey the most played class was not priest. The Karazhan content release could theoretically have created a large skew in the deck uploads due to a certain card called Purify.
+
+![Purify][purify]
+
+[purify]
 ## **Conclusion**

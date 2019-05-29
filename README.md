@@ -30,9 +30,19 @@ Taking a look at the most popular class per patch (based on total number of deck
 
 [class_pop_per_patch]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/most_popular_class_per_patch.png
 
-While this may not look interesting, the three patches where priest was the most uploaded deck could actually be a farce. While yes, the most user-made decks during that time were Priest decks, it's very likey the most played class was not priest. The Karazhan content release could theoretically have created a large skew in the deck uploads due to a certain card called Purify.
+While this may not look interesting, the two patches where priest was the most uploaded deck could actually be a farce. While yes, the most user-made decks during that time were Priest decks, it's very likey the most played class was not priest. The Karazhan content release could theoretically have created a large skew in the deck uploads due to a certain card called Purify.
 
 ![Purify][purify]
 
-[purify]
+[purify]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/purify.png
+
+It was by miles the worst card that had been added to the game, which means everyone wanted to make a deck where it was good to try and prove... something? I strongly believe this card single handedly skewed the priest data. If we take a look at the highest rated deck per patch, it supports this data as well.
+
+![best_deck_per_patch][deck_per_patch]
+
+[deck_per_patch]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/most_popular_deck_per_patch.png
+
+All of these decks but 1 were actually good decks. The outlier here is purify priest, which at the time boasted (if you were lucky) around a 10% winrate. The highest rated decks afterwards are actual good decks again, but I do believe that the desire to make what was deemed a "meme card" good in a competitive setting skewed the data.
 ## **Conclusion**
+
+It's pretty plain to see that whenever new content is released, the deck uploads spike briefly and slowly decline until new content comes out again. What makes the data most interesting to me is how easily it can be skewed. Just a single bad card made a bad deck "good" purely because people were making fun of it. 

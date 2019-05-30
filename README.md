@@ -14,6 +14,10 @@ The basics of a game Hearthstone are as follows:
 - Minions are played on the board, and can be used to attack your opponent or their minions
 - Spells are single use effects that can be used on a variety of targets, such as minions, your deck, your opponent, etc.
 
+![Hearthstone Board][hs_board]
+
+[hs_board]:https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/hearthstone_gameplay.png
+
 The dataset was pulled from a popular deck sharing website called [hearthpwn](https://www.hearthpwn.com), and contains over 340,000 decks uploaded from the game's release until February of 2017. The dataset also contains a .json file with every card in the game and their attributes.
 
 ## **Questions**
@@ -62,8 +66,14 @@ It was by miles the worst card that had been added to the game, which means ever
 [deck_per_patch]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/most_popular_deck_per_patch.png
 
 All of these decks but 1 were actually good decks. The outlier here is purify priest, which at the time boasted (if you were lucky) around a 10% winrate. The highest rated decks afterwards are actual good decks again, but I do believe that the desire to make what was deemed a "meme card" good in a competitive setting skewed the data.
-## **Conclusion**
 
+## **Conclusion**
 It's pretty plain to see that whenever new content is released, the deck uploads spike briefly and slowly decline until new content comes out again. What makes the data most interesting to me is how easily it can be skewed. Just a single bad card made a bad deck "good" purely because people were making fun of it. 
 
 ## **Photo and Data Credits**
+- I did not create nor do I own any images/data from the game of Hearthstone
+- This data was collected from https://www.hearthpwn.com using their API by a Kaggle user named romainvincent. The data can be accessed [by clicking here.](https://www.kaggle.com/romainvincent/history-of-hearthstone/metadata)
+- Hearthstone, World of Warcraft, and all related properties are owned by Blizzard Entertainment
+- The gameplay image was pulled from an article on https://www.windowscentral.com, the article can be found [here.](https://www.windowscentral.com/hearthstone-rise-mech-event-starts-june)
+- The image of the Purify card was pulled from the [Hearthstone Wiki](https://hearthstone.gamepedia.com), the page about the card Purify [can be found here.](https://hearthstone.gamepedia.com/Purify)
+- All graphs and charts were made by myself in matplotlob using the data from Kaggle

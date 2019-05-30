@@ -29,6 +29,9 @@ It's immediately obvious that there's a lot of bad data in here. The deck csv wa
 
 With the card json, there was also a lot of dirty data, but it was easy to decide what to keep. Since any single player specific cards or even joke cards that you only see when you watch the credits of the game were also in this file, it had a lot of cards that literally would never show up in a ranked deck. While I didn't need to trim this data, I wanted to make the frame as small as possible to increase processing time. The most important thing I wanted to do was reduce the columns, as each card contained 31 columns of data. I was able to cut this down to 16 important columns,which was after dropping all columns with irrelevant or redundant data.
 
+All of the code used to clean the data can be found [here.](https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/src/hearthstone_eda.py)
+The notebook used for plotting and data manipulation can be found [here.](https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/notebooks/EDA_plotting.ipynb)
+
 ## **Visualization**
 What I really wanted to know about this data (as a former player) is how balance updates to certain cards or new releases affect what is played or popular. As a starting point, this is the total amount of deck uploads per content update.
 ![Uploads per Patch][patch_uploads]

@@ -4,8 +4,8 @@ import json
 
 def read_data():
     '''Initializes the two, uncleaned dataframes'''
-    unclean_df = pd.read_csv("data/hearthstone_decks.csv")
-    json_df = pd.read_json("data/refs.json")
+    unclean_df = pd.read_csv("../data/hearthstone_decks.csv")
+    json_df = pd.read_json("../data/refs.json")
     return unclean_df, json_df
 
 def deck_list_create(unclean_df):

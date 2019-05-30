@@ -1,10 +1,6 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 import json
-import scipy.stats as stats
-
-plt.style.use('ggplot')
 
 def read_data():
     '''Initializes the two, uncleaned dataframes'''

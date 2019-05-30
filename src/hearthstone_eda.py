@@ -14,7 +14,7 @@ def deck_list_create(unclean_df):
     big_card_df = pd.DataFrame(unclean_df[card_col_ls], columns=card_col_ls) #creates a new dataframe with JUST the card columns so .values works correctly
     big_card_list = big_card_df.values.tolist() #makes list of lists of deck lists
     for ls in big_card_list:
-        for idx, card in ls:
+        for idx, card in enumerate(ls):
             if card in broken_ids.keys():
                 ls[idx] = broken_ids[card]
     unclean_df['card_list'] = tuple(map(tuple, big_card_list)) #makes new column where each value in big_card_list is mapped from a list to a tuple

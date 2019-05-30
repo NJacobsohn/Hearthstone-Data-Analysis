@@ -52,25 +52,52 @@ Taking a look at the most popular class per patch (based on total number of deck
 
 [class_pop_per_patch]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/most_popular_class_per_patch.png
 
-While this may not look interesting, the two patches where priest was the most uploaded deck could actually be a farce. While yes, the most user-made decks during that time were Priest decks, it's very likey the most played class was not priest. The Karazhan content release could theoretically have created a large skew in the deck uploads due to a certain card called Purify.
-
-<p align="center">
-  <img width="200" height="250" src="img/purify.png">
-</p>
-
-
-It was by miles the worst card that had been added to the game, which means everyone wanted to make a deck where it was good to try and prove... something? I strongly believe this card single handedly skewed the priest data. If we take a look at the highest rated deck per patch, it supports this data as well.
 
 ![best_deck_per_patch][deck_per_patch]
 
 [deck_per_patch]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/most_popular_deck_per_patch.png
 
-All of these decks but 1 were actually good decks. The outlier here is purify priest, which at the time boasted (if you were lucky) around a 10% winrate. The highest rated decks afterwards are actual good decks again, but I do believe that the desire to make what was deemed a "meme card" good in a competitive setting skewed the data.
+Let's take an easier look at how these (if at all) line up.
 
-Despite this deck being so highly rated, purify only appears in 7% of priest decks from when it was release until the next expansion came out. Which led me down an interesting idea of determining the most popular cards for each class in ranked decks. Let's look at the priest cards first.
+![deck_and_class_match][matching]
+
+[matching]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/deck_matching_class_pop.png
+
+So there really doesn't seem to be any sort of tie-in between what decks were highly rated versus what classes people like playing. But there it something interesting about the best decks plot. All of the decks on it but 1 are actually good decks, the outlier being Purify Priest. Purify Priest (at the time) boasted, if you were lucky, around a 10% winrate.
+
+#### **What's a Purify???**
+
+<p align="center">
+  <img width="200" height="250" src="img/purify.png">
+</p>
+
+While this may not seem either bad or good, this card was by miles the worst card that had been added to the game. It was so bad it became a challenge to try and make a deck that could actually win centered around purify's effect. Fortunately (maybe), that challenge took off and consquently created a whole cult of Hearthstone fans who called the Purify Priest the "Unicorn Deck". Something that's so mystical and powerful that it couldn't possibly exist. The high rated version of it that is seen on the above graph is a remnant of this belief that it truly was the strongest deck, just no one knew how to use it.
+
+## **Return to Visualization**
+
+The highest rated decks after Purify Priest are actual good decks again, but the following behind this unicorn deck caused an interesting blip on an otherwise pristine chart.
+Funnily enough, Purify only appears in 7% of Priest decks from its release until the next expansion came out 3 months later. Leading down an interesting idea of determining the most popular cards for each class in ranked decks. Let's look at the Priest cards first.
+
+![top_50_priest_cards_by_representation][top_50_priest]
+
+[top_50_priest]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/priest_card_percentages.png
+
+If you're angry that our lord and savior Purify isn't on this chart, please click [here](https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/purify_purify_purify_purify.png) for a version of it that says Purify for every card. If you're not, let's proceed. Something of note on this plot is the fact that some of the top 50 Priest cards are actually Neutral cards. I felt these were important to keep in as even though they may be Neutral, these are the specific Neutral cards most used in Priest decks. Each class has different Neutral cards that happen to synergize with their cards. We can get a good idea of which Neutral cards are shared amongst the most classes by looking at the top 50 cards overall.
+
+![top_50_all][top_50]
+
+[top_50]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/wild_card_representation.png
+
+That top 15 right there is what I'm talking about. Those are the Neutral cards consistently find their way into 2, 3, or even 5 different classes. Let's peek at the top 15 cards for each class.
+
+![top_15_all_classes][top_15_all]
+
+[top_15_all]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/class_card_representation.png
+
+Azure Drake shows up in 5 different classes, and in 40%-50% of decks for those classes. Sylvanas Windrunner, the overall 2nd place shows up in 3. These cards were later 
 
 ## **Conclusion**
-It's pretty plain to see that whenever new content is released, the deck uploads spike briefly and slowly decline until new content comes out again. What makes the data most interesting to me is how easily it can be skewed. Just a single bad card made a bad deck "good" purely because people were making fun of it. 
+It's pretty plain to see that whenever new content is released, the deck uploads spike briefly and slowly decline until new content comes out again. What makes the data most interesting to me is how easily it can be skewed. Just a single bad card made a bad deck "good" purely because people were making fun of it. Or a single good card makes marginal popularity improvements become massive improvements. Hearthstone's popularity continues to rise even if the monthly submissions slow briefly. 
 
 ## **Photo and Data Credits**
 - I did not create nor do I own any images/data from the game of Hearthstone

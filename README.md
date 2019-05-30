@@ -46,18 +46,20 @@ This shows the total amount of uploads per content release compared to the overa
 
 Another thing I wanted to visualize was the most popular class and deck for each content update. While this might be the most interesting to people who play the game, it can give a cool insight on how the meta adjusts when things are changed.
 
-Taking a look at the most popular class per patch (based on total number of deck uploads) actually tells us a lot.
+Starting with the most popular class per patch:
 
 ![Class pop per Patch][class_pop_per_patch]
 
 [class_pop_per_patch]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/most_popular_class_per_patch.png
 
+And on to the highest rated decks.
 
 ![best_deck_per_patch][deck_per_patch]
 
 [deck_per_patch]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/most_popular_deck_per_patch.png
 
-Let's take an easier look at how these (if at all) line up.
+It's pretty hard to tell at a glance how these line up, so lets mark them based off of if the deck matches the popular class rather than just by class.
+
 
 ![deck_and_class_match][matching]
 

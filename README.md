@@ -65,7 +65,7 @@ It's pretty hard to tell at a glance how these line up, so lets mark them based 
 
 [matching]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/deck_matching_class_pop.png
 
-So there really doesn't seem to be any sort of tie-in between what decks were highly rated versus what classes people like playing. But there it something interesting about the best decks plot. All of the decks on it but 1 are actually good decks, the outlier being Purify Priest. Purify Priest (at the time) boasted, if you were lucky, around a 10% winrate.
+So there really doesn't seem to be any sort of tie-in between what decks were highly rated versus what classes people like playing. But there it something interesting about the highest rated decks. Every deck on it is a deck with a high winrate, except for one. This beautiful little outlier is Purify Priest. Purify Priest (at the time) boasted, if you were lucky, around a 10% winrate.
 
 #### **What's a Purify???**
 

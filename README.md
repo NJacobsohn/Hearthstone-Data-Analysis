@@ -16,7 +16,7 @@ The basics of a game Hearthstone are as follows:
 
 ![Hearthstone Board][hs_board]
 
-[hs_board]:https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/hearthstone_gameplay.png
+[hs_board]:https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/hearthstone_gameplay.jpg
 
 The dataset was pulled from a popular deck sharing website called [hearthpwn](https://www.hearthpwn.com), and contains over 340,000 decks uploaded from the game's release until February of 2017. The dataset also contains a .json file with every card in the game and their attributes.
 

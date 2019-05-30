@@ -1,12 +1,29 @@
 # Hearthstone Data Analysis
 
 ## **Overview**
-Hearthstone is a digital card game release by Blizzard Entertainment in 2014. It's a free to play game featuring many prominent characters from World of Warcraft. Hearthstone quickly became extremely popular due to having similar gameplay to Magic: The Gathering but also having a much lower barrier to entry. It also has many facets that make it unique due to its electronic only nature. Creating random cards from a class and shuffling them into your deck, cards that replace your deck with a different one mid-match, or even a card that shuffles a copy of your opponents deck into your deck.
+Hearthstone is a digital card game release by Blizzard Entertainment in 2014. It's a free to play game featuring many prominent characters from World of Warcraft. Hearthstone quickly became extremely popular due to having similar gameplay to Magic: The Gathering while also having a much lower barrier to entry. It has many facets that make it unique due to its electronic nature, such as:
+- Creating random cards from a class and shuffling them into your deck
+- Cards that replace your deck with a different one mid-match 
+- A card that shuffles a copy of your opponents deck into your deck
+It has many built in gamemodes, but the main mode, and the mode I'm looking at with regards to the data, is ranked play. The other modes are not as interesting to look at as many of them change weekly or involve playing solo. 
+
+The basics of a game Hearthstone are as follows:
+- Each player has a 30-card deck
+- The deck type is chosen from 1 of 9 classes
+- Each deck fundamentally contains a mix of two card types, minions and spells
+- Minions are played on the board, and can be used to attack your opponent or their minions
+- Spells are single use effects that can be used on a variety of targets, such as minions, your deck, your opponent, etc.
 
 The dataset was pulled from a popular deck sharing website called [hearthpwn](https://www.hearthpwn.com), and contains over 340,000 decks uploaded from the game's release until February of 2017. The dataset also contains a .json file with every card in the game and their attributes.
 
+## **Questions**
+- How did the popularity of Hearthstone change from its initial release as they released more content?
+- What classes were popular/unpopular for each content change? Do they correspond at all with what the highest rated decks were?
+
 ## **Cleaning**
-It's immediately obvious that there's a lot of bad data in here. With the card json, it was easy to decide what to keep. Only cards that are collectible, and that can be put into a deck were kept into consideration. The decks were a bit of a challenge, but ultimately I separated the main dataset into a couple, smaller dataframes with pandas. I ended up with only the decks that were created for use in the ranked gamemode, about 200,000 entries. From there I organized the data by each deck's user rating, and removed all duplicate entries, bringing the total data sample size to 184,903 decks.
+It's immediately obvious that there's a lot of bad data in here. The deck csv was a bit of a challenge. It started with 346,232 decks, with each card in the deck in it's own column. My first task was to take all 30 card columns, combine their values into a tuple, put that tuple in its own column, then drop the 30 individual columns. From there, I realized that the data also included decks from many of Hearthstone's special gamemodes, so I just wanted the decks that were made for ranked play. Now I've got a 202,375 row data frame of just decks in the ranked play mode, it's done right? Wrong. Keeping duplicate deck lists didn't seem very important as there were many copies of popular deck lists that were uploaded with little to no ratings. I sorted the data by ratings and dropped all duplicate decks with lower ratings, bringing the final data size to 184,903 decks.
+
+With the card json, there was also a lot of dirty data, but it was easy to decide what to keep. Since any single player specific cards or even joke cards that you only see when you watch the credits of the game were also in this file, it had a lot of cards that literally would never show up in a ranked deck. While I didn't need to trim this data, I wanted to make the frame as small as possible to increase processing time. The most important thing I wanted to do was reduce the columns, as each card contained 31 columns of data. I was able to cut this down to 16 important columns,which was after dropping all columns with irrelevant or redundant data.
 
 ## **Visualization**
 What I really wanted to know about this data (as a former player) is how balance updates to certain cards or new releases affect what is played or popular. As a starting point, this is the total amount of deck uploads per content update.
@@ -48,3 +65,5 @@ All of these decks but 1 were actually good decks. The outlier here is purify pr
 ## **Conclusion**
 
 It's pretty plain to see that whenever new content is released, the deck uploads spike briefly and slowly decline until new content comes out again. What makes the data most interesting to me is how easily it can be skewed. Just a single bad card made a bad deck "good" purely because people were making fun of it. 
+
+## **Photo and Data Credits**

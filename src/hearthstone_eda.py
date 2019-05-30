@@ -11,7 +11,7 @@ def read_data():
 def deck_list_create(unclean_df):
     '''takes the deck dataframe and combines all the single card columns into a single columns with a list of dbfIds'''
     card_col_ls = ['card_{}'.format(i) for i in range(30)] #creates list of column names for cards
-    big_card_df = pd.DataFrame(unclean_df[card_col_ls], columns=card_col_ls) #creates a new dataframe with JUST the card columns
+    big_card_df = pd.DataFrame(unclean_df[card_col_ls], columns=card_col_ls) #creates a new dataframe with JUST the card columns so .values works correctly
     big_card_list = big_card_df.values.tolist() #makes list of lists of deck lists
     unclean_df['card_list'] = tuple(map(tuple, big_card_list)) #makes new column where each value in big_card_list is mapped from a list to a tuple
     unclean_df.drop(card_col_ls, axis=1, inplace=True) #drops single card lists in favor of the new listed one
@@ -115,19 +115,7 @@ if __name__ == '__main__':
 
     json_df = drop_cols(drop_rows(fill_with_na(json_df, card_fill_dict), card_row_drop_dict), card_cols_to_drop)
     json_df['health'] = weapon_durability_fixing(json_df)
-
-
-    
-
-
     #with the above code, the card DF should be as clean as it needs to be!
-
-    #this code just makes a smaller dataframe with just the card ids and names, might be useful but also might be pointless
-    card_id_df = pd.DataFrame()
-    card_id_df['dbfId'], card_id_df['name'] = json_df['dbfId'], json_df['name']
-    card_id_df.sort_values('dbfId', ascending=True, inplace=True)
-
-
 
     #starting below is code to clean the deck df
 
@@ -155,24 +143,7 @@ if __name__ == '__main__':
     ranked_decks_2016['month'] = ranked_decks_2016['date'].map(lambda x: x.month)
     ranked_decks_2017 = ranked_decks[ranked_decks['date'].map(lambda x: x.year == 2017)]
     ranked_decks_2017['month'] = ranked_decks_2017['date'].map(lambda x: x.month)
-
-    tournament_2014 = tournament[tournament['date'].map(lambda x: x.year == 2014)]
-    tournament_2015 = tournament[tournament['date'].map(lambda x: x.year == 2015)]
-    tournament_2016 = tournament[tournament['date'].map(lambda x: x.year == 2016)]
-    tournament_2017 = tournament[tournament['date'].map(lambda x: x.year == 2017)]
-
-
-    #type_ls = list(unclean_df['deck_type'].unique()) #makes list of unique values
-    #this is the main and most important df
-        #ranked_deck_df = unique_column_split(unclean_df, 'deck_type', 'Ranked Deck') #SIZE= 202375, 184903 after dups 8.6%
-    #not sure if this is important, might just drop it since it's so small
-        #theorycraft_df = unique_column_split(unclean_df, 'deck_type', 'Theorycraft') #SIZE= 19688, 19438 after removing dups 1.3%
-    #what even is this HUGE dataframe, needs cleaning and sorting
-        #none_df = unique_column_split(unclean_df, 'deck_type', 'None') #SIZE= 91058, 83309 after removing dups 8.5%
-    #tournament decks are maybe important? (tournament meta versus popular meta?)
-        #tournament_df = unique_column_split(unclean_df, 'deck_type', 'Tournament') #SIZE= 3597, 2770 after remove 23% 
     
-
     # SET IDs
     '''
     {
@@ -190,8 +161,6 @@ if __name__ == '__main__':
         NAXX : Naxxramus
     }
     '''
-
-
 
     #DECK DF MASTER COL LIST
     '''
@@ -226,7 +195,3 @@ if __name__ == '__main__':
     'health', 'mechanics', 'name', 'overload', 'race', 
     'rarity', 'referencedTags', 'set', 'spellDamage', 'text', 'type'] 
     '''
-
-    
-
-        

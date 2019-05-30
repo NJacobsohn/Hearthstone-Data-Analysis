@@ -13,6 +13,10 @@ def deck_list_create(unclean_df):
     card_col_ls = ['card_{}'.format(i) for i in range(30)] #creates list of column names for cards
     big_card_df = pd.DataFrame(unclean_df[card_col_ls], columns=card_col_ls) #creates a new dataframe with JUST the card columns so .values works correctly
     big_card_list = big_card_df.values.tolist() #makes list of lists of deck lists
+    for ls in big_card_list:
+        for idx, card in ls:
+            if card in broken_ids.keys():
+                ls[idx] = broken_ids[card]
     unclean_df['card_list'] = tuple(map(tuple, big_card_list)) #makes new column where each value in big_card_list is mapped from a list to a tuple
     unclean_df.drop(card_col_ls, axis=1, inplace=True) #drops single card lists in favor of the new listed one
     return unclean_df
@@ -60,6 +64,23 @@ def weapon_durability_fixing(json_data):
 if __name__ == '__main__':
 
     unclean_df, json_df = read_data()
+    #turns out there are some broken ids, fixing them early should help
+    broken_ids = {836.0: 836.0, 137.0: 836.0, 253.0: 836.0,
+    1681.0: 692.0, 38319.0: 692.0, 1682.0: 692.0, 692.0: 692.0,
+    19292.0: 1929.0, 38710.0: 1929.0, 1929.0: 1929.0,
+    2466.0: 2261.0, 2380.0: 2261.0, 41609.0: 2261.0, 2430.0: 2261.0,
+    45369.0: 2261.0, 2652.0: 2261.0, 2558.0: 2261.0, 40259.0: 2261.0, 2261.0: 2261.0,
+    13335.0: 13335.0, 38112.0: 13335.0, 38113.0: 13335.0,
+    86.0: 86.0, 1161.0: 86.0, 928.0: 86.0,
+    41408.0: 40372.0, 40372.0: 40372.0, 41409.0: 40372.0,
+    2292.0: 2292.0, 2311.0: 2292.0, 38320.0: 2292.0, 2310.0: 2292.0,
+    40402.0: 38266.0, 38266.0: 38266.0,
+    42146.0: 40953.0, 40953.0: 40953.0, 42213.0: 40953.0,
+    40341.0: 940.0, 40352.0: 940.0, 940.0: 940.0,
+    690.0: 151.0, 276.0: 151.0, 322.0: 151.0, 468.0: 151.0, 151.0: 151.0,
+    2048.0: 2048.0, 2230.0: 2048.0,
+    179.0: 179.0, 38653.0: 179.0,
+    2178.0: 2009.0, 2009.0: 2009.0, 2177.0: 2009.0, 2176.0: 2009.0}
     unclean_df = deck_list_create(unclean_df)
     ranked_decks, none_type, tournament = deck_dataframe_creation(unclean_df)
     df_list = [ranked_decks, none_type, tournament] #creates list of dfs to easily iterate future cleaning methods through them

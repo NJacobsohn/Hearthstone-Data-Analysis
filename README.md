@@ -67,6 +67,8 @@ It was by miles the worst card that had been added to the game, which means ever
 
 All of these decks but 1 were actually good decks. The outlier here is purify priest, which at the time boasted (if you were lucky) around a 10% winrate. The highest rated decks afterwards are actual good decks again, but I do believe that the desire to make what was deemed a "meme card" good in a competitive setting skewed the data.
 
+Despite this deck being so highly rated, purify only appears in 7% of priest decks from when it was release until the next expansion came out. Which led me down an interesting idea of determining the most popular cards for each class in ranked decks. Let's look at the priest cards first.
+
 ## **Conclusion**
 It's pretty plain to see that whenever new content is released, the deck uploads spike briefly and slowly decline until new content comes out again. What makes the data most interesting to me is how easily it can be skewed. Just a single bad card made a bad deck "good" purely because people were making fun of it. 
 

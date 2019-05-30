@@ -116,10 +116,10 @@ if __name__ == '__main__':
         2)ROW DROP
         3)COL DROP
     '''
-    json_df = drop_cols(drop_rows(fill_with_na(json_df, card_fill_dict), card_row_drop_dict), card_cols_to_drop)
-    #print(json_df.shape)
-    json_df['health'] = weapon_durability_fixing(json_df)
-    #print(json_df.shape)
+    #json_df = drop_cols(drop_rows(fill_with_na(json_df, card_fill_dict), card_row_drop_dict), card_cols_to_drop)
+
+    #json_df['health'] = weapon_durability_fixing(json_df)
+
 
     
 

@@ -67,10 +67,10 @@ It's pretty hard to tell at a glance how these line up, so lets mark them based 
 
 So there really doesn't seem to be any sort of tie-in between what decks were highly rated versus what classes people like playing. But there it something interesting about the highest rated decks. Every deck on it is a deck with a high winrate, except for one. This beautiful little outlier is Purify Priest. Purify Priest (at the time) boasted, if you were lucky, around a 10% winrate.
 
-#### **What's a Purify???**
+## **What's a Purify???**
 
 <p align="center">
-  <img width="200" height="250" src="img/purify.png">
+  <img width="225" height="300" src="img/purify.png">
 </p>
 
 While this may not seem either bad or good, this card was by miles the worst card that had been added to the game. It was so bad it became a challenge to try and make a deck that could actually win centered around purify's effect. Fortunately (maybe), that challenge took off and consquently created a whole cult of Hearthstone fans who called the Purify Priest the "Unicorn Deck". Something that's so mystical and powerful that it couldn't possibly exist. The high rated version of it that is seen on the above graph is a remnant of this belief that it truly was the strongest deck, just no one knew how to use it.

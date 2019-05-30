@@ -1,5 +1,16 @@
 # Purifying Hearthstone Data
 
+# Table of Contents
+1. [Overview](#overview)
+2. [Questions](#questions)
+4. [Cleaning](#cleaning)
+5. [Visualization](#visualization)
+6. [What's a Purify???](#what's-a-purify???)
+7. [Return to Visualization](#return-to-visualization)
+8. [Conclusion](#conclusion)
+9. [Photo and Data Credits](#photo-and-data-credits)
+
+
 ## **Overview**
 Hearthstone is a digital card game release by Blizzard Entertainment in 2014. It's a free to play game featuring many prominent characters from World of Warcraft. Hearthstone quickly became extremely popular due to having similar gameplay to Magic: The Gathering while also having a much lower barrier to entry. It has many facets that make it unique due to its electronic nature, such as:
 - Creating random cards from a class and shuffling them into your deck

@@ -110,7 +110,7 @@ That top 15 right there is what I'm talking about. Those are the Neutral cards c
 
 [top_15_all]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/class_card_representation.png
 
-Azure Drake shows up in 5 different classes, and in 40%-50% of decks for those classes. Sylvanas Windrunner, the overall 2nd place shows up in 3. These cards were later 
+Azure Drake shows up in 5 different classes, and in 40%-50% of decks for those classes. Sylvanas Windrunner, the overall 2nd place shows up in 3.
 
 ## **Conclusion**
 It's pretty plain to see that whenever new content is released, the deck uploads spike briefly and slowly decline until new content comes out again. What makes the data most interesting to me is how easily it can be skewed. Just a single bad card made a bad deck "good" purely because people were making fun of it. Or a single good card makes marginal popularity improvements become massive improvements. Hearthstone's popularity continues to rise even if the monthly submissions slow briefly. 

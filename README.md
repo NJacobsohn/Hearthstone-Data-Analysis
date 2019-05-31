@@ -16,6 +16,8 @@ Hearthstone is a digital card game release by Blizzard Entertainment in 2014. It
 - Creating random cards from a class and shuffling them into your deck
 - Cards that replace your deck with a different one mid-match 
 - A card that shuffles a copy of your opponents deck into your deck
+
+
 It has many built in gamemodes, but the main mode, and the mode I'm looking at with regards to the data, is ranked play. The other modes are not as interesting to look at as many of them change weekly or involve playing solo. 
 
 The basics of a game Hearthstone are as follows:

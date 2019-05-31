@@ -74,7 +74,7 @@ And on to the highest rated decks.
 
 [deck_per_patch]: https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/most_popular_deck_per_patch.png
 
-It's pretty hard to tell at a glance how these line up, so lets mark them based off of if the deck matches the popular class rather than just by class.
+It's pretty hard to tell at a glance how these line up, so let's mark them based off of if the deck matches the popular class rather than just by class.
 
 
 ![deck_and_class_match][matching]

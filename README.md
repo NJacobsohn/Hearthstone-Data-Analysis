@@ -94,7 +94,7 @@ While this may not seem either bad or good, this card was by miles the worst car
 ## **Return to Visualization**
 
 The highest rated decks after Purify Priest are actual good decks again, but the following behind this unicorn deck caused an interesting blip on an otherwise pristine chart.
-Funnily enough, Purify only appears in 7% of Priest decks from its release until the next expansion came out 3 months later. Leading down an interesting idea of determining the most popular cards for each class in ranked decks. Let's look at the Priest cards first.
+Funny enough, Purify only appears in 7% of Priest decks from its release until the next expansion came out 3 months later. Leading down an interesting idea of determining the most popular cards for each class in ranked decks. Let's look at the Priest cards first.
 
 ![top_50_priest_cards_by_representation][top_50_priest]
 

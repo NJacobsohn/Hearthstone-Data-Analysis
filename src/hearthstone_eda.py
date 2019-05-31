@@ -165,6 +165,8 @@ if __name__ == '__main__':
     ranked_decks_2017 = ranked_decks[ranked_decks['date'].map(lambda x: x.year == 2017)]
     ranked_decks_2017['month'] = ranked_decks_2017['date'].map(lambda x: x.month)
     
+    #The following data is for personal reference and bookkeeping
+
     # SET IDs
     '''
     {

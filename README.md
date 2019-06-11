@@ -1,5 +1,9 @@
 # Purifying Hearthstone Data
 
+![Hearthstone Logo][hs_logo]
+[hs_logo]:https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/hearthstone_logo.jpg
+
+
 # Table of Contents
 1. [Overview](#overview)
 2. [Questions](#questions)

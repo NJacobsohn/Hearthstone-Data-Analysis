@@ -1,6 +1,7 @@
 # Purifying Hearthstone Data
 
 ![Hearthstone Logo][hs_logo]
+
 [hs_logo]:https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/hearthstone_logo.jpg
 
 
@@ -125,6 +126,7 @@ It's pretty plain to see that whenever new content is released, the deck uploads
 - I did not create nor do I own any images/data from the game of Hearthstone
 - This data was collected from https://www.hearthpwn.com using their API by a Kaggle user named romainvincent. The data can be accessed [by clicking here.](https://www.kaggle.com/romainvincent/history-of-hearthstone/metadata)
 - Hearthstone, World of Warcraft, and all related properties are owned by Blizzard Entertainment
+- The logo image was downloaded from the [main website for Hearthstone.](https://playhearthstone.com/en-us/)
 - The gameplay image was pulled from an article on https://www.windowscentral.com, the article can be found [here.](https://www.windowscentral.com/hearthstone-rise-mech-event-starts-june)
 - The image of the Purify card was pulled from the [Hearthstone Wiki](https://hearthstone.gamepedia.com), the page about the card Purify [can be found here.](https://hearthstone.gamepedia.com/Purify)
 - All graphs and charts were made by myself in matplotlob using the data from Kaggle

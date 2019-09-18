@@ -2,7 +2,7 @@
 
 ![Hearthstone Logo][hs_logo]
 
-[hs_logo]:https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/hearthstone_logo.jpg
+
 
 
 # Table of Contents
@@ -130,3 +130,6 @@ It's pretty plain to see that whenever new content is released, the deck uploads
 - The gameplay image was pulled from an article on https://www.windowscentral.com, the article can be found [here.](https://www.windowscentral.com/hearthstone-rise-mech-event-starts-june)
 - The image of the Purify card was pulled from the [Hearthstone Wiki](https://hearthstone.gamepedia.com), the page about the card Purify [can be found here.](https://hearthstone.gamepedia.com/Purify)
 - All graphs and charts were made by myself in matplotlob using the data from Kaggle
+
+
+[hs_logo]:https://github.com/NJacobsohn/Hearthstone-Data-Analysis/blob/master/img/hearthstone_logo.jpg
